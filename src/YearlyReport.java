@@ -1,67 +1,47 @@
 import java.util.ArrayList;
 
 public class YearlyReport {
-    ArrayList<YearlyReportLines> yearlyReport;
+    ArrayList<YearlyReportLine> yearlyReport;
 
     public YearlyReport() {
         yearlyReport = new ArrayList<>();
     }
-    public void addElements(Integer month, Integer amount, Boolean is_expense){
-        yearlyReport.add(new YearlyReportLines(month,amount,is_expense));
+    public void addElements(Integer month, Integer amount, Boolean isExpense){
+        yearlyReport.add(new YearlyReportLine(month, amount, isExpense));
     }
 
-    public void yearlyMonthProfit(){
-        Integer jan=0;
-        Integer feb=0;
-        Integer mar=0;
-        for (YearlyReportLines y: yearlyReport
-        ) {
-            switch (y.month){
-                case 1:
-                    if(y.is_expense){
-                        jan-=y.amount;
-                    }else{
-                        jan+=y.amount;
-                    }
-                    break;
-                case 2:
-                    if(y.is_expense){
-                        feb-=y.amount;
-                    }else{
-                        feb+=y.amount;
-                    }
-                    break;
-                case 3:
-                    if(y.is_expense){
-                        mar-=y.amount;
-                    }else{
-                        mar+=y.amount;
-                    }
-                    break;
-
+    public void printYearlyMonthProfit() {
+        MonthOfYear name = new MonthOfYear();
+        int [] profit=new int[yearlyReport.size() / 2];
+        for (YearlyReportLine y: yearlyReport) {
+            for (int i = 0; i < yearlyReport.size(); i++) {
+              if (y.month == (i+1)) {
+                  if(y.isExpense) {
+                      profit[i] -= y.amount;
+                  } else {
+                      profit[i] += y.amount;
+                  }
+              }
             }
         }
-        System.out.println("Прибыль за январь:"+jan);
-        System.out.println("Прибыль за февраль:"+feb);
-        System.out.println("Прибыль за март:"+mar);
-
+        for (int i = 0; i < profit.length; i++) {
+            System.out.println("Прибыль за " + name.monthNames[i] + ":" + profit[i]);
+        }
     }
 
-    public void yearlyMidProfit(){
-       Integer yearProfit=0;
-       Integer yearExpense=0;
-       Integer counter=0;
-       for (YearlyReportLines y:
-                         yearlyReport) {
-       counter =y.month;
-       if(y.is_expense){
-       yearExpense+=y.amount;
-       }else{
-       yearProfit+=y.amount;
+    public void printYearlyMidProfit() {
+       int yearProfit = 0;
+       int yearExpense = 0;
+
+       for (YearlyReportLine y: yearlyReport) {
+            if (y.isExpense) {
+                yearExpense += y.amount;
+            } else {
+                yearProfit += y.amount;
+            }
        }
-       }
-       System.out.println("Средний расход в этом году:"+yearExpense/counter);
-       System.out.println("Средний доход в этом году:"+yearProfit/counter);
+       System.out.println("Средний расход в этом году:"+ yearExpense/(yearlyReport.size()/2));
+       System.out.println("Средний доход в этом году:"+ yearProfit/(yearlyReport.size()/2));
 
     }
 }
