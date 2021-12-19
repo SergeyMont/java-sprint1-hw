@@ -32,27 +32,29 @@ public class Main {
                     break;
                 case 3:
                     if (monthlyBase.isEmpty() || yearlyReport.yearlyReport.isEmpty()) {
-                        System.out.println("Годовой или месячный отчет не загружены в базу. Попробуйте ещё раз");
+                        System.out.println("Годовой или месячный отчет не загружены в базу. " +
+                                "Попробуйте ещё раз");
                     } else {
-                        Checker checker=new Checker(yearlyReport);
-                        checker.checkMonthYearReports(monthlyBase,yearlyReport);
+                        Checker checker = new Checker();
+                        checker.checkMonthYearReports(monthlyBase, yearlyReport);
                     }
                     break;
                 case 4:
-                    if (monthlyBase.isEmpty() || yearlyReport.yearlyReport.isEmpty()) {
-                        System.out.println("Годовой или месячный отчет не загружены в базу. Попробуйте ещё раз");
+                    if (monthlyBase.isEmpty()) {
+                        System.out.println("Месячный отчет не загружены в базу. " +
+                                "Попробуйте ещё раз");
                     } else {
                         for (int i = 0; i < monthlyBase.size(); i++) {
-                            MonthOfYear name = new MonthOfYear();
-                            System.out.println("Информация о месяце : " + name.monthNames[i]);
+                            System.out.println("Информация о месяце : " + MonthOfYear.monthNames[i]);
                             MonthlyReport m = monthlyBase.get(i);
                             m.printMaxExpenseAndProfit();
                         }
                     }
                     break;
                 case 5:
-                    if (monthlyBase.isEmpty() || yearlyReport.yearlyReport.isEmpty()) {
-                        System.out.println("Годовой или месячный отчет не загружены в базу. Попробуйте ещё раз");
+                    if (yearlyReport.yearlyReport.isEmpty()) {
+                        System.out.println("Годовой отчет не загружены в базу. " +
+                                "Попробуйте ещё раз");
                     } else {
                         String[] yearPath = pathY.split("\\W+");
                         System.out.println("Годовой отчет за " + yearPath[2] + " год");
@@ -69,9 +71,10 @@ public class Main {
                     break;
             }
         }
-     }
+    }
 
-    private static void addYearReportInBase(String pathY, YearlyReport yearlyReport, FileReader reader) {
+    private static void addYearReportInBase(String pathY, YearlyReport yearlyReport,
+                                            FileReader reader) {
         String reportY = reader.readFile(pathY);
         String[] lines = reportY.split(System.lineSeparator());
         for (int j = 1; j < lines.length; j++) {
@@ -84,7 +87,8 @@ public class Main {
     }
 
     private static void addMonthReportInBase(ArrayList<String> filePath,
-                                  HashMap<Integer, MonthlyReport> monthlyBase, FileReader reader) {
+                                             HashMap<Integer, MonthlyReport> monthlyBase,
+                                             FileReader reader) {
         for (int i = 0; i < filePath.size(); i++) {
             int k = i + 1;
             String report = reader.readFile(filePath.get(i));
