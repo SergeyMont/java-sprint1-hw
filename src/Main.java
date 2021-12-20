@@ -5,20 +5,15 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        String path1 = "resources/m.202101.csv";
-        String path2 = "resources/m.202102.csv";
-        String path3 = "resources/m.202103.csv";
         String pathY = "resources/y.2021.csv";
         ArrayList<String> filePath = new ArrayList<>();
-        filePath.add(path1);
-        filePath.add(path2);
-        filePath.add(path3);
+        filePath.add("resources/m.202101.csv");
+        filePath.add("resources/m.202102.csv");
+        filePath.add("resources/m.202103.csv");
         HashMap<Integer, MonthlyReport> monthlyBase = new HashMap<>();
         YearlyReport yearlyReport = new YearlyReport();
-        // Поехали!
         Scanner scanner = new Scanner(System.in);
         FileReader reader = new FileReader();
-
 
         while (true) {
             Menu.printMenu();
@@ -41,7 +36,7 @@ public class Main {
                     break;
                 case 4:
                     if (monthlyBase.isEmpty()) {
-                        System.out.println("Месячный отчет не загружены в базу. " +
+                        System.out.println("Месячный отчет не загружен в базу. " +
                                 "Попробуйте ещё раз");
                     } else {
                         for (int i = 0; i < monthlyBase.size(); i++) {
@@ -53,13 +48,13 @@ public class Main {
                     break;
                 case 5:
                     if (yearlyReport.yearlyReport.isEmpty()) {
-                        System.out.println("Годовой отчет не загружены в базу. " +
+                        System.out.println("Годовой отчет не загружен в базу. " +
                                 "Попробуйте ещё раз");
                     } else {
                         String[] yearPath = pathY.split("\\W+");
                         System.out.println("Годовой отчет за " + yearPath[2] + " год");
                         yearlyReport.printYearlyMonthProfit();
-                        yearlyReport.printYearlyMidProfit();
+                        yearlyReport.printYearlyMidProfit(yearPath[2]);
                     }
                     break;
                 case 0:
@@ -90,7 +85,6 @@ public class Main {
                                              HashMap<Integer, MonthlyReport> monthlyBase,
                                              FileReader reader) {
         for (int i = 0; i < filePath.size(); i++) {
-            int k = i + 1;
             String report = reader.readFile(filePath.get(i));
             MonthlyReport month = new MonthlyReport();
             String[] lines = report.split(System.lineSeparator());
@@ -103,7 +97,7 @@ public class Main {
 
             }
             monthlyBase.put(i, month);
-            System.out.println("Отчет #" + k + " успешно добавлен в базу");
+            System.out.println("Отчет #" + (i + 1) + " успешно добавлен в базу");
         }
     }
 }

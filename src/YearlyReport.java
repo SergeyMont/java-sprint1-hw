@@ -13,11 +13,11 @@ public class YearlyReport {
 
     public void printYearlyMonthProfit() {
         int[] profit = new int[yearlyReport.size() / 2];
-        for (YearlyReportLine y:yearlyReport) {
+        for (YearlyReportLine y : yearlyReport) {
             if (y.isExpense) {
-                profit[y.month-1] -= y.amount;
+                profit[y.month - 1] -= y.amount;
             } else {
-                profit[y.month-1] += y.amount;
+                profit[y.month - 1] += y.amount;
             }
         }
         for (int i = 0; i < profit.length; i++) {
@@ -25,7 +25,7 @@ public class YearlyReport {
         }
     }
 
-    public void printYearlyMidProfit() {
+    public void printYearlyMidProfit(String year) {
         int yearProfit = 0;
         int yearExpense = 0;
 
@@ -36,8 +36,7 @@ public class YearlyReport {
                 yearProfit += y.amount;
             }
         }
-        System.out.println("Средний расход в этом году:" + yearExpense / (yearlyReport.size() / 2));
-        System.out.println("Средний доход в этом году:" + yearProfit / (yearlyReport.size() / 2));
-
+        System.out.println("Средний расход в " + year + " году:" + yearExpense / (yearlyReport.size() / 2));
+        System.out.println("Средний доход в " + year + " году:" + yearProfit / (yearlyReport.size() / 2));
     }
 }
