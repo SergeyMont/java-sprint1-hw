@@ -72,6 +72,11 @@ public class Main {
                                             FileReader reader) {
         String reportY = reader.readFile(pathY);
         String[] lines = reportY.split(System.lineSeparator());
+        // При использовании в коде разделителя "\n" на ОС Windows выпадает NumberFormatException
+        // System.lineSeparator() возвращает разделитель в зависимости от файловой системы
+        // (работает на всех ОС)
+        // Использование данного метода согласовано с наставником Владимиром Ивановым
+        // String[] lines = reportY.split("\n");
         for (int j = 1; j < lines.length; j++) {
             String[] values1 = lines[j].split(",");
             yearlyReport.addElements(Integer.valueOf(values1[0]),
